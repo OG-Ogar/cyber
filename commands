@@ -1,0 +1,28 @@
+command 1.
+
+nc -ul 9000 : network engineers call it the "Swiss Army knife" of networking because it can easily open ports and throw data across a network.
+
+nc -> netcat program uses TCP(transmission control protocol).
+
+-u -> stands for UDP(user datagram protocol) the flag forces it to use the faster connectionless UDP protocol we talk about.
+
+-l -> stands for listen instead of sending data out, this tell the device to act as a receiver and listen to incoming data.
+
+9000 -> This is the Port Number. Think of your laptop's IP address like a massive apartment building, and port 9000 as apartment number 9000. This tells Netcat to stand exactly at door 9000 and wait.
+
+command2.
+
+echo "Hello World" | nc -u -b -w1 255.255.255.255 9000
+
+echo "Hello World": The echo command simply prints text on the screen. Here, it creates the raw text payload: "Hello World"
+
+nc: Starts Netcat on the sending laptop.
+
+-u: Tells Netcat to bundle the text into a UDP packet.
+
+-b: Stands for Broadcast. Linux has built-in safety rules to prevent apps from accidentally blasting the whole network. This flag tells the system: "Yes, I know what I'm doing, allow me to broadcast this."
+
+-w1: Stands for Wait 1 second. Because UDP never gets a reply back from the receiver, Netcat would normally stay open forever waiting for something to happen. This tells it to close down and return to your normal prompt 1 second after firing the packet.
+
+• 255.255.255.255: This is the universal UDP Broadcast Address. When a router sees this specific IP, it replicates the packet and shouts it out to every single device currently connected to the local network.
+• 9000: The target Port Number. This ensures the broadcast packet knocks specifically on apartment door 9000 on all those devices.
